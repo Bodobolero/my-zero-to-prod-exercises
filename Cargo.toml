@@ -26,18 +26,21 @@ tracing-bunyan-formatter = "0.3"
 tracing-log = "0.1"
 tracing-actix-web = "0.7"
 secrecy = { version = "0.8", features = ["serde"] }
+serde-aux = "4.1.2"
 
 # Using table-like toml syntax to avoid a super-long line!
 [dependencies.sqlx]
 version = "0.6"
 default-features = false
+## offline feature needed to build sqlx without syntax checking (without requiring database) in docker buidl
 features = [
     "runtime-actix-rustls",
     "macros",
     "postgres",
     "uuid",
     "chrono",
-    "migrate"
+    "migrate",
+    "offline"
 ]
 
 [dev-dependencies]
