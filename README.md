@@ -3,5 +3,5 @@ Exercises done while learning https://github.com/LukeMathWalker/zero-to-producti
 
 Also see a CI/CD setup template for github under gist https://gist.github.com/LukeMathWalker/5ae1107432ce283310c3e601fac915f3 
 
-Current version up to chapter 6 https://www.lpalmieri.com/posts/2020-12-11-zero-to-production-6-domain-modelling/#4-type-driven-development
+Current version up to chapter 6.5 https://www.lpalmieri.com/posts/an-introduction-to-property-based-testing-in-rust/
 
