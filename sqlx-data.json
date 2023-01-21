@@ -1,6 +1,6 @@
 {
   "db": "PostgreSQL",
-  "47f75dd99429be8147af1e9cc17dad35e73389801d282d4d1b396fece37a5980": {
+  "06dd4909b0120f49979a991165277b778d2b1ca6271ef47732ba2395b9c948b7": {
     "describe": {
       "columns": [],
       "nullable": [],
@@ -13,6 +13,6 @@
         ]
       }
     },
-    "query": "\n            INSERT INTO subscriptions (id, email, name, subscribed_at, status)\n            VALUES ($1, $2, $3, $4, 'confirmed')\n        "
+    "query": "\n            INSERT INTO subscriptions (id, email, name, subscribed_at, status)\n            VALUES ($1, $2, $3, $4, 'pending_confirmation')\n        "
   }
 }
