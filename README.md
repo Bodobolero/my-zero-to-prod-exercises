@@ -3,7 +3,7 @@ Exercises done while learning https://github.com/LukeMathWalker/zero-to-producti
 
 Also see a CI/CD setup template for github under gist https://gist.github.com/LukeMathWalker/5ae1107432ce283310c3e601fac915f3 
 
-Current version up to chapter 7 Part 2 https://www.lpalmieri.com/posts/zero-downtime-deployments/
+Current version up to chapter 8 https://www.lpalmieri.com/posts/error-handling-rust/
 
-TODO: pick up new actix-web which fixes RUSTSEC-2023-0001 by bumping up Tokio
+Now picked up new actix-web 4.3 release which fixes RUSTSEC-2023-0001 by bumping up Tokio
 
