@@ -3,6 +3,6 @@ Exercises done while learning https://github.com/LukeMathWalker/zero-to-producti
 
 Also see a CI/CD setup template for github under gist https://gist.github.com/LukeMathWalker/5ae1107432ce283310c3e601fac915f3 
 
-Current version up to chapter 9 https://www.lpalmieri.com/posts/naive-newsletter-delivery/
+Current version up to chapter 10 part 1 https://www.lpalmieri.com/posts/session-based-authentication-in-rust
 
 
