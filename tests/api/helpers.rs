@@ -103,6 +103,16 @@ impl TestApp {
         let plain_text = get_link(body["TextBody"].as_str().unwrap());
         ConfirmationLinks { html, plain_text }
     }
+    pub async fn get_admin_dashboard(&self) -> String {
+        self.api_client
+            .get(&format!("{}/admin/dashboard", &self.address))
+            .send()
+            .await
+            .expect("Failed to execute request.")
+            .text()
+            .await
+            .unwrap()
+    }
 }
 
 pub async fn spawn_app() -> TestApp {
@@ -131,7 +141,8 @@ pub async fn spawn_app() -> TestApp {
         .await
         .expect("Failed to build application.");
     let application_port = application.port();
-    let _ = tokio::spawn(application.run_until_stopped());
+
+    tokio::spawn(application.run_until_stopped());
 
     let client = reqwest::Client::builder()
         .redirect(reqwest::redirect::Policy::none())
@@ -140,7 +151,7 @@ pub async fn spawn_app() -> TestApp {
         .unwrap();
 
     let test_app = TestApp {
-        address: format!("http://localhost:{}", application_port),
+        address: format!("http://localhost:{application_port}"),
         port: application_port,
         db_pool: get_connection_pool(&configuration.database)
             .await

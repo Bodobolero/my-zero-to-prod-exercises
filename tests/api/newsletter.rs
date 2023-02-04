@@ -122,8 +122,7 @@ async fn newsletters_returns_400_for_invalid_data() {
             400,
             response.status().as_u16(),
             // Additional customised error message on test failure
-            "The API did not fail with 400 Bad Request when the payload was {}.",
-            error_message
+            "The API did not fail with 400 Bad Request when the payload was {error_message}."
         );
     }
 }
