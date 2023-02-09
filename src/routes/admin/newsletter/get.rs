@@ -5,11 +5,7 @@ use actix_web::HttpResponse;
 use actix_web_flash_messages::IncomingFlashMessages;
 use std::fmt::Write;
 
-#[tracing::instrument(
-    skip(flash_messages),
-    fields(user_id=tracing::field::Empty)
-)]
-pub async fn change_password_form(
+pub async fn submit_newsletter_form(
     flash_messages: IncomingFlashMessages,
     user_id: web::ReqData<UserId>,
 ) -> Result<HttpResponse, actix_web::Error> {
@@ -25,37 +21,40 @@ pub async fn change_password_form(
 <html lang="en">
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title>Change Password</title>
+    <title>Submit a new newsletter</title>
 </head>
 <body>
     {msg_html}
-    <form action="/admin/password" method="post">
-        <label>Current password
+    <form action="/admin/newsletters" method="post">
+        <label>Title:<br>
             <input
-                type="password"
-                placeholder="Enter current password"
-                name="current_password"
+                type="text"
+                placeholder="Enter the issue title"
+                name="title"
             >
         </label>
         <br>
-        <label>New password
-            <input
-                type="password"
-                placeholder="Enter new password"
-                name="new_password"
-            >
+        <label>Plain text content:<br>
+            <textarea
+                placeholder="Enter the content in plain text"
+                name="text"
+                rows="20"
+                cols="50"
+            ></textarea>
         </label>
         <br>
-        <label>Confirm new password
-            <input
-                type="password"
-                placeholder="Type the new password again"
-                name="new_password_check"
-            >
+        <label>HTML content:<br>
+            <textarea
+                placeholder="Enter the content in HTML format"
+                name="html"
+                rows="20"
+                cols="50"
+            ></textarea>
         </label>
         <br>
-        <button type="submit">Change password</button>
+        <button type="submit">Publish</button>
     </form>
+    <br>
     <p><a href="/admin/dashboard">&lt;- Back</a></p>
 </body>
 </html>"#,
