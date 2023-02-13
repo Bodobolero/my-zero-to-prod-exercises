@@ -8,6 +8,10 @@ use sqlx::PgPool;
 use crate::domain::SubscriberEmail;
 use crate::email_client::EmailClient;
 
+use crate::idempotency::get_saved_response;
+use crate::idempotency::save_response;
+use crate::idempotency::IdempotencyKey;
+use crate::utils::e400;
 use anyhow::Context;
 
 #[derive(serde::Deserialize)]
@@ -15,6 +19,7 @@ pub struct FormData {
     title: String,
     html: String,
     text: String,
+    idempotency_key: String,
 }
 
 #[tracing::instrument(
@@ -28,13 +33,28 @@ pub async fn publish_newsletter(
     email_client: web::Data<EmailClient>,
     user_id: web::ReqData<UserId>,
 ) -> Result<HttpResponse, actix_web::Error> {
-    let _user_id = user_id.into_inner();
+    let user_id = user_id.into_inner();
+    let FormData {
+        title,
+        text,
+        html,
+        idempotency_key,
+    } = form.0;
+    let idempotency_key: IdempotencyKey = idempotency_key.try_into().map_err(e400)?;
+    if let Some(saved_response) = get_saved_response(&pool, &idempotency_key, *user_id)
+        .await
+        .map_err(e500)?
+    {
+        success_message().send(); // this is different from the book! but without it the idempotency testcase failed
+        return Ok(saved_response);
+    }
     let subscribers = get_confirmed_subscribers(&pool).await.map_err(e500)?;
     for subscriber in subscribers {
         match subscriber {
             Ok(subscriber) => {
+                // No longer using `form.<X>`
                 email_client
-                    .send_email(&subscriber.email, &form.title, &form.html, &form.text)
+                    .send_email(&subscriber.email, &title, &html, &text)
                     .await
                     .with_context(|| {
                         format!("Failed to send newsletter issue to {}", subscriber.email)
@@ -50,8 +70,16 @@ pub async fn publish_newsletter(
             }
         }
     }
-    FlashMessage::info("Your newsletter has been sent.").send();
-    Ok(see_other("/admin/newsletters"))
+    success_message().send();
+    let response = see_other("/admin/newsletters");
+    let response = save_response(&pool, &idempotency_key, *user_id, response)
+        .await
+        .map_err(e500)?;
+    Ok(response)
+}
+
+fn success_message() -> FlashMessage {
+    FlashMessage::info("Your newsletter has been sent.")
 }
 
 struct ConfirmedSubscriber {
