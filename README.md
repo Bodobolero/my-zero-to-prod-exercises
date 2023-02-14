@@ -5,4 +5,6 @@ Also see a CI/CD setup template for github under gist https://gist.github.com/Lu
 
 Final version including chapter 11 in https://www.lpalmieri.com/posts/idempotency/
 
+All copyright belongs to Luca Palmieri - I copied the sources following his book/blog zero to production.
+
 
