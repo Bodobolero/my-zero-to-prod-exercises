@@ -12,8 +12,8 @@ database:
   database_name: "newsletter"
   require_ssl: true
 email_client:
-  base_url: "localhost"
-  sender_email: "test@gmail.com"
+  base_url: "https://api.postmarkapp.com"
+  sender_email: "mymail@mydomain.com"
   authorization_token: "my-secret-token"
   timeout_milliseconds: 10000
 # 6379 is Redis' default port
