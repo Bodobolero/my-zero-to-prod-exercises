@@ -7,4 +7,6 @@ Final version including chapter 11 in https://www.lpalmieri.com/posts/idempotenc
 
 All copyright belongs to Luca Palmieri - I copied the sources following his book/blog zero to production.
 
+Some issues in the github repo that comes with the book reflect changes after the book was published, for example zld linker on Macos is now deprecated, ld64 (apple) is now faster than before and lld is also available on MacOs https://github.com/LukeMathWalker/zero-to-production/issues/192
+
 
